@@ -9,7 +9,7 @@ from library import lightController
 if __name__ == '__main__':
   context = zmq.Context()
   socket = context.socket(zmq.SUB)
-  socket.bind("tcp://*:%s" % "2555")
+  socket.bind("tcp://10.0.0.73:%s" % "2555")
   lightControllerInstance = lightController.lightController()
   lightControllerInstance.colorWipe(Color(148, 0, 211))
   threading.Thread(target=lightControllerInstance.pulseBrightness, args=()).start()
