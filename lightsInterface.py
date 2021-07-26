@@ -1,7 +1,7 @@
 from rpi_ws281x import Color
 import threading
 import zmq
-from .library import lightController
+from library import lightController
 
 #Will assume that commands are validated before receiving them
 #One thread will listen to zmq publisher socket (main thread) and will 
