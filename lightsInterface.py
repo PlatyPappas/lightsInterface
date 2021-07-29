@@ -15,10 +15,10 @@ class SupportThreadController:
     self.pulseThreadToggle = True
     self.brightnessThreadToggle = True
 
-    self.colorThread = threading.Thread(target=self.colorThreadOperation, args=())
-    self.modeThread = threading.Thread(target=self.modeThreadOperation, args=())
-    self.pulseThread = threading.Thread(target=self.pulseThreadOperation, args=())
-    self.brightnessThread = threading.Thread(target=self.brightnessThreadOperation, args=())
+    self.colorThread = threading.Thread(target=self.colorThreadOperation)
+    self.modeThread = threading.Thread(target=self.modeThreadOperation)
+    self.pulseThread = threading.Thread(target=self.pulseThreadOperation)
+    self.brightnessThread = threading.Thread(target=self.brightnessThreadOperation)
 
     self.colorContext = zmq.Context()
     self.colorSocket = self.colorContext.socket(zmq.REP)
