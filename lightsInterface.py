@@ -82,7 +82,7 @@ class SupportThreadController:
       print(command)
       args = command.split()
       threading.Thread(target=self.lightControllerShare.changeColor,args=(int(args[0]), int(args[1]), int(args[2]))).start()
-      self.colorSocket.send_string("OK")
+      self.colorSocket.send_string("Color OK")
     print("Color thread exiting")
 
   def modeThreadOperation(self):
@@ -92,7 +92,7 @@ class SupportThreadController:
       command = self.modeSocket.recv_string()
       args = lightMode.lightChangeDict[command]
       self.lightControllerShare.changeMode(args)
-      self.modeSocket.send_string("OK")
+      self.modeSocket.send_string("Mode OK")
     print("Mode thread exiting")
   
   def pulseThreadOperation(self):
@@ -102,7 +102,7 @@ class SupportThreadController:
       self.pulseSocket.recv_string()
       self.lightControllerShare.changePulse
       threading.Thread(target=self.lightControllerShare.pulseBrightness, args=()).start()
-      self.pulseSocket.send_string("OK")
+      self.pulseSocket.send_string("Pulse OK")
     print("Pulse thread exiting")
   
   def brightnessThreadOperation(self):
@@ -111,7 +111,7 @@ class SupportThreadController:
     while self.brightnessThreadToggle:
       command = self.brightnessSocket.recv_string()
       threading.Thread(target=self.lightControllerShare.setBrightness, args=(int(command))).start()
-      self.brightnessSocket.send_string("OK")
+      self.brightnessSocket.send_string("Brightness OK")
     print("Brightness thread exiting")
 
 if __name__ == '__main__':
