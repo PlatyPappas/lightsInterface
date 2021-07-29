@@ -21,20 +21,21 @@ class SupportThreadController:
     self.brightnessThread = threading.Thread(target=self.brightnessThreadOperation, args=())
 
     self.colorContext = zmq.Context()
-    self.colorSocket = self.colorContext.socket(zmq.SUB)
+    self.colorSocket = self.colorContext.socket()
 
     self.modeContext = zmq.Context()
-    self.modeSocket = self.modeContext.socket(zmq.SUB)
+    self.modeSocket = self.modeContext.socket()
 
     self.pulseContext = zmq.Context()
-    self.pulseSocket = self.pulseContext.socket(zmq.SUB)
+    self.pulseSocket = self.pulseContext.socket()
 
     self.brightnessContext = zmq.Context()
-    self.brightnessSocket = self.brightnessContext.socket(zmq.SUB)
+    self.brightnessSocket = self.brightnessContext.socket()
 
     self.lightControllerShare = lightController.lightController()
   
   def startThreads(self):
+    print("Starting threads...")
     self.colorThread.start
     self.modeThread.start
     self.pulseThread.start
@@ -48,22 +49,22 @@ class SupportThreadController:
     self.brightnessThreadToggle = False
 
     colorContext = zmq.Context()
-    colorSocket = colorContext.socket(zmq.PUB)
+    colorSocket = colorContext.socket()
     colorSocket.connect("tcp://127.0.0.1:%s" % "2555")
     colorSocket.send_string("0 0 0")
 
     modeContext = zmq.Context()
-    modeSocket = modeContext.socket(zmq.PUB)
+    modeSocket = modeContext.socket()
     modeSocket.connect("tcp://127.0.0.1:%s" % "2556")
     modeSocket.send_string("WIPE")
 
     pulseContext = zmq.Context()
-    pulseSocket = pulseContext.socket(zmq.PUB)
+    pulseSocket = pulseContext.socket()
     pulseSocket.connect("tcp://127.0.0.1:%s" % "2557")
     pulseSocket.send_string("FOO")
 
     brightnessContext = zmq.Context()
-    brightnessSocket = brightnessContext.socket(zmq.PUB)
+    brightnessSocket = brightnessContext.socket()
     brightnessSocket.connect("tcp://127.0.0.1:%s" % "2558")
     brightnessSocket.send_string("0")
 
@@ -74,6 +75,7 @@ class SupportThreadController:
     sys.exit(0)
 
   def colorThreadOperation(self):
+    print("Color thread started")
     self.colorSocket.bind("tcp://*:%s" % "2555")
     while self.colorThreadToggle:
       command = self.colorSocket.recv_string()
@@ -82,6 +84,7 @@ class SupportThreadController:
       threading.Thread(target=self.lightControllerShare.changeColor,args=(int(args[0]), int(args[1]), int(args[2]))).start()
 
   def modeThreadOperation(self):
+    print("Mode thread started")
     self.modeSocket.bind("tcp://*:%s" % "2556")
     while self.modeThreadToggle:
       command = self.modeSocket.recv_string()
@@ -89,6 +92,7 @@ class SupportThreadController:
       self.lightControllerShare.changeMode(args)
   
   def pulseThreadOperation(self):
+    print("Pulse thread started")
     self.pulseSocket.bind("tcp://*:%s" % "2557")
     while self.pulseThreadToggle:
       self.pulseSocket.recv_string()
@@ -96,6 +100,7 @@ class SupportThreadController:
       threading.Thread(target=self.lightControllerShare.pulseBrightness, args=()).start()
   
   def brightnessThreadOperation(self):
+    print("Brightness thread started")
     self.brightnessSocket.bind("tcp://*:%s" % "2558")
     while self.brightnessThreadToggle:
       command = self.brightnessSocket.recv_string()
