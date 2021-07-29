@@ -10,6 +10,7 @@ from library import lightController, lightMode
 
 class SupportThreadController:
   def __init__(self):
+    print("In cons")
     self.colorThreadToggle = True
     self.modeThreadToggle = True
     self.pulseThreadToggle = True
