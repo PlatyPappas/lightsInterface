@@ -117,6 +117,6 @@ class SupportThreadController:
 if __name__ == '__main__':
   threadController = SupportThreadController()
   threadController.startThreads
-  signal.signal(signal.SIGINT, threadController.signal_handler)
+  #signal.signal(signal.SIGINT, threadController.signal_handler)
   while True:
     pass
