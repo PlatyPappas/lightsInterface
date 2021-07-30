@@ -51,7 +51,29 @@ class lightController:
     self.currentGreen = self.desiredGreen
     self.currentBlue = self.desiredBlue
   
-  def colorFade(self, wait_ms=1):
+  def colorFade(self, wait_ms=.1):
+    for i in range(self.currentBrightness, 0, -1):
+      self.currentBrightness = i
+      self.strip.setBrightness(i)
+      self.strip.show()
+      time.sleep(wait_ms / 1000.0)
+
+    for i in range(self.strip.numPixels()):
+      self.strip.setPixelColor(i, Color(self.desiredRed, self.desiredGreen, self.desiredBlue))
+    self.strip.show()
+    time.sleep(wait_ms / 1000.0)
+
+    for i in range(0, self.currentBrightness + 1):
+      self.currentBrightness = i
+      self.strip.setBrightness(i)
+      self.strip.show()
+      time.sleep(wait_ms / 1000.0)
+      
+    self.currentRed = self.desiredRed
+    self.currentGreen = self.desiredGreen
+    self.currentBlue = self.desiredBlue
+  
+  def colorFlowFade(self, wait_ms=1):
     formerRed = self.currentRed
     formerGreen = self.currentGreen
     formerBlue = self.currentBlue
