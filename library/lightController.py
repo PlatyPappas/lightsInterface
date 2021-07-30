@@ -26,9 +26,7 @@ class lightController:
     self.strip.begin()
   
   def changeMode(self, newMode):
-    print(newMode)
     self.mode = newMode
-    print(self.mode)
   
   def changePulse(self):
     self.pulseOn = not self.pulseOn
@@ -54,6 +52,8 @@ class lightController:
     self.currentBlue = self.desiredBlue
   
   def colorFade(self, wait_ms=.1):
+    formerBrightness = self.currentBrightness
+
     for i in range(self.currentBrightness, 0, -1):
       self.currentBrightness = i
       self.strip.setBrightness(i)
@@ -65,7 +65,7 @@ class lightController:
     self.strip.show()
     time.sleep(wait_ms / 1000.0)
 
-    for i in range(0, self.currentBrightness + 1):
+    for i in range(0, formerBrightness + 1):
       self.currentBrightness = i
       self.strip.setBrightness(i)
       self.strip.show()
