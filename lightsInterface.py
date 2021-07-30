@@ -1,7 +1,5 @@
 import threading
-import signal
 import sys
-import time
 import zmq
 from library import lightController, lightMode
 
@@ -10,7 +8,6 @@ from library import lightController, lightMode
 
 class SupportThreadController:
   def __init__(self):
-    print("In cons")
     self.colorThreadToggle = True
     self.modeThreadToggle = True
     self.pulseThreadToggle = True
@@ -20,6 +17,7 @@ class SupportThreadController:
     self.modeThread = threading.Thread(target=self.modeThreadOperation)
     self.pulseThread = threading.Thread(target=self.pulseThreadOperation)
     self.brightnessThread = threading.Thread(target=self.brightnessThreadOperation)
+    print("Threads assigned")
 
     self.colorContext = zmq.Context()
     self.colorSocket = self.colorContext.socket(zmq.REP)
@@ -32,8 +30,10 @@ class SupportThreadController:
 
     self.brightnessContext = zmq.Context()
     self.brightnessSocket = self.brightnessContext.socket(zmq.REP)
+    print("Sockets assigned")
 
     self.lightControllerShare = lightController.lightController()
+    print("Lights made")
   
   def startThreads(self):
     print("Starting threads...")
