@@ -1,5 +1,6 @@
 import threading
 import sys
+import signal
 import zmq
 from library import lightController, lightMode
 
@@ -117,7 +118,7 @@ class SupportThreadController:
 
 if __name__ == '__main__':
   threadController = SupportThreadController()
-  threadController.startThreads
-  #signal.signal(signal.SIGINT, threadController.signal_handler)
+  threadController.startThreads()
+  signal.signal(signal.SIGINT, threadController.signal_handler)
   while True:
     pass
