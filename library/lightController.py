@@ -16,13 +16,13 @@ class lightController:
     self.ledPin = 18
     self.ledFreq = 800000
     self.ledDma = 10
-    self.currentBrightness = 180
-    self.desiredBrightness = 180
+    self.currentBrightness = 50
+    self.desiredBrightness = 50
     self.maxBrightness = 180
     self.minBrightness = 50
     self.invert = False
     self.ledChannel = 0
-    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.minBrightness, self.ledChannel)
+    self.strip = PixelStrip(self.ledCount, self.ledPin, self.ledFreq, self.ledDma, self.invert, self.currentBrightness, self.ledChannel)
     self.strip.begin()
   
   def changeMode(self, newMode):
