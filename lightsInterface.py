@@ -18,7 +18,6 @@ class SupportThreadController:
     self.modeThread = threading.Thread(target=self.modeThreadOperation)
     self.pulseThread = threading.Thread(target=self.pulseThreadOperation)
     self.brightnessThread = threading.Thread(target=self.brightnessThreadOperation)
-    print("Threads assigned")
 
     self.colorContext = zmq.Context()
     self.colorSocket = self.colorContext.socket(zmq.REP)
@@ -31,17 +30,15 @@ class SupportThreadController:
 
     self.brightnessContext = zmq.Context()
     self.brightnessSocket = self.brightnessContext.socket(zmq.REP)
-    print("Sockets assigned")
 
     self.lightControllerShare = lightController.lightController()
-    print("Lights made")
   
   def startThreads(self):
     print("Starting threads...")
-    self.colorThread.start
-    self.modeThread.start
-    self.pulseThread.start
-    self.brightnessThread.start
+    self.colorThread.start()
+    self.modeThread.start()
+    self.pulseThread.start()
+    self.brightnessThread.start()
   
   def signal_handler(self, sig, frame):
     #switch off
@@ -70,10 +67,10 @@ class SupportThreadController:
     brightnessSocket.connect("tcp://127.0.0.1:%s" % "2558")
     brightnessSocket.send_string("0")
 
-    self.colorThread.join
-    self.modeThread.join
-    self.pulseThread.join
-    self.brightnessThread.join
+    self.colorThread.join()
+    self.modeThread.join()
+    self.pulseThread.join()
+    self.brightnessThread.join()
     sys.exit(0)
 
   def colorThreadOperation(self):
