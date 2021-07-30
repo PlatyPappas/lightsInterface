@@ -109,7 +109,7 @@ class SupportThreadController:
     self.brightnessSocket.bind("tcp://*:%s" % "2558")
     while self.brightnessThreadToggle:
       command = self.brightnessSocket.recv_string()
-      threading.Thread(target=self.lightControllerShare.setBrightness, args=(int(command))).start()
+      threading.Thread(target=self.lightControllerShare.setBrightness, args=([int(command)])).start()
       self.brightnessSocket.send_string("Brightness OK")
     print("Brightness thread exiting")
 
