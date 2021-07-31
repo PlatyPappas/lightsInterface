@@ -228,8 +228,8 @@ class lightController:
   
   def setBrightness(self, newBrightness, wait_ms=1):
     if not self.pulseOn and newBrightness <= 255 and newBrightness >= 0:
-      print(newBrightness)
       self.desiredBrightness = newBrightness
+      print(self.desiredBrightness)
       if self.desiredBrightness > self.currentBrightness:
         for i in range(self.currentBrightness, self.desiredBrightness + 1):
           print(i)
