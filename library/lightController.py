@@ -232,14 +232,12 @@ class lightController:
       print(self.desiredBrightness)
       if self.desiredBrightness > self.currentBrightness:
         for i in range(self.currentBrightness, self.desiredBrightness + 1):
-          print(i)
           self.currentBrightness = i
           self.strip.setBrightness(i)
           self.strip.show()
           time.sleep(wait_ms / 1000.0)
       else:
-        for i in range(self.desiredBrightness, self.currentBrightness - 1, -1):
-          print(i)
+        for i in range(self.currentBrightness, self.desiredBrightness - 1, -1):
           self.currentBrightness = i
           self.strip.setBrightness(i)
           self.strip.show()
