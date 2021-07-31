@@ -99,7 +99,7 @@ class SupportThreadController:
     self.pulseSocket.bind("tcp://*:%s" % "2557")
     while self.pulseThreadToggle:
       self.pulseSocket.recv_string()
-      self.lightControllerShare.changePulse
+      self.lightControllerShare.changePulse()
       threading.Thread(target=self.lightControllerShare.pulseBrightness, args=()).start()
       self.pulseSocket.send_string("Pulse OK")
     print("Pulse thread exiting")
