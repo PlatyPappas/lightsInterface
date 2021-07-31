@@ -124,7 +124,7 @@ class lightController:
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-  def colorFlow(self, wait_ms=.1):
+  def colorFlow(self, wait_ms=.05):
     while (self.currentRed < self.desiredRed):
       self.currentRed +=1
       for j in range(self.strip.numPixels()):
