@@ -32,7 +32,6 @@ class SupportThreadController:
     print("Starting threads...")
     self.colorThread.start()
     self.modeThread.start()
-    self.pulseThread.start()
     self.brightnessThread.start()
   
   def signal_handler(self, sig, frame):
