@@ -124,7 +124,7 @@ class lightController:
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-  def colorFlow(self, wait_ms=1):
+  def colorFlow(self, wait_ms=.1):
     while (self.currentRed < self.desiredRed):
       self.currentRed +=1
       for j in range(self.strip.numPixels()):
@@ -226,17 +226,19 @@ class lightController:
         time.sleep(wait_ms / 1000.0)
       time.sleep(wait_ms / 1000.0)
   
-  def setBrightness(self, newBrightness, wait_ms=10):
+  def setBrightness(self, newBrightness, wait_ms=1):
     if not self.pulseOn and newBrightness <= 255 and newBrightness >= 0:
       self.desiredBrightness = newBrightness
       if self.desiredBrightness > self.currentBrightness:
         for i in range(self.currentBrightness, self.desiredBrightness + 1):
+          print(i)
           self.currentBrightness = i
           self.strip.setBrightness(i)
           self.strip.show()
           time.sleep(wait_ms / 1000.0)
       else:
         for i in range(self.desiredBrightness, self.currentBrightness - 1, -1):
+          print(i)
           self.currentBrightness = i
           self.strip.setBrightness(i)
           self.strip.show()
