@@ -9,9 +9,6 @@ class lightController:
     self.currentRed = 0
     self.currentBlue = 0
     self.currentGreen = 0
-    self.desiredRed = 0
-    self.desiredBlue = 0
-    self.desiredGreen = 0
     self.ledCount = 300
     self.ledPin = 18
     self.ledFreq = 800000
@@ -32,26 +29,23 @@ class lightController:
     self.pulseOn = not self.pulseOn
   
   def changeColor(self, red, green, blue):
-    self.desiredRed = red
-    self.desiredGreen = green
-    self.desiredBlue = blue
     if (self.mode == lightChangeMode.WIPE):
-      self.colorWipe()
+      self.colorWipe(red, green, blue)
     elif (self.mode == lightChangeMode.FADE):
-      self.colorFade()
+      self.colorFade(red, green, blue)
     else:
-      self.colorFlow()
+      self.colorFlow(red, green, blue)
   
-  def colorWipe(self, wait_ms=10):
+  def colorWipe(self, red, green, blue, wait_ms=10):
     for i in range(self.strip.numPixels()):
-      self.strip.setPixelColor(i, Color(self.desiredRed, self.desiredGreen, self.desiredBlue))
+      self.strip.setPixelColor(i, Color(red, green, blue))
       self.strip.show()
       time.sleep(wait_ms / 1000.0)
-    self.currentRed = self.desiredRed
-    self.currentGreen = self.desiredGreen
-    self.currentBlue = self.desiredBlue
+    self.currentRed = red
+    self.currentGreen = green
+    self.currentBlue = blue
   
-  def colorFade(self, wait_ms=.1):
+  def colorFade(self, red, green, blue, wait_ms=.1):
     formerBrightness = self.currentBrightness
 
     for i in range(self.currentBrightness, 0, -1):
@@ -61,7 +55,7 @@ class lightController:
       time.sleep(wait_ms / 1000.0)
 
     for i in range(self.strip.numPixels()):
-      self.strip.setPixelColor(i, Color(self.desiredRed, self.desiredGreen, self.desiredBlue))
+      self.strip.setPixelColor(i, Color(red, green, blue))
     self.strip.show()
     time.sleep(wait_ms / 1000.0)
 
@@ -71,11 +65,11 @@ class lightController:
       self.strip.show()
       time.sleep(wait_ms / 1000.0)
 
-    self.currentRed = self.desiredRed
-    self.currentGreen = self.desiredGreen
-    self.currentBlue = self.desiredBlue
+    self.currentRed = red
+    self.currentGreen = green
+    self.currentBlue = blue
   
-  def colorFlowFade(self, wait_ms=1):
+  def colorFlowFade(self, red, green, blue, wait_ms=1):
     formerRed = self.currentRed
     formerGreen = self.currentGreen
     formerBlue = self.currentBlue
@@ -103,64 +97,64 @@ class lightController:
       time.sleep(wait_ms / 1000.0)
     
     #Increment our shit
-    for i in range(self.desiredRed + 1):
+    for i in range(red + 1):
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(i, self.currentGreen, self.currentBlue))
       self.currentRed = i
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
     
-    for i in range(self.desiredGreen + 1):
+    for i in range(green + 1):
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, i, self.currentBlue))
       self.currentGreen = i
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
     
-    for i in range(self.desiredBlue):
+    for i in range(blue + 1):
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, i))
       self.currentBlue = i
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-  def colorFlow(self, wait_ms=.05):
-    while (self.currentRed < self.desiredRed):
+  def colorFlow(self, red, green, blue, wait_ms=.05):
+    while (self.currentRed < red):
       self.currentRed +=1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
     
-    while (self.currentRed > self.desiredRed):
+    while (self.currentRed > red):
       self.currentRed -= 1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-    while (self.currentGreen < self.desiredGreen):
+    while (self.currentGreen < green):
       self.currentGreen += 1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-    while (self.currentGreen > self.desiredGreen):
+    while (self.currentGreen > green):
       self.currentGreen -= 1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
     
-    while (self.currentBlue < self.desiredBlue):
+    while (self.currentBlue < blue):
       self.currentBlue += 1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
       self.strip.show()  # show after we set all of the pixels
       time.sleep(wait_ms / 1000.0)
 
-    while (self.currentBlue > self.desiredBlue):
+    while (self.currentBlue > blue):
       self.currentBlue -= 1
       for j in range(self.strip.numPixels()):
         self.strip.setPixelColor(j, Color(self.currentRed, self.currentGreen, self.currentBlue))
