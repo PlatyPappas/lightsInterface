@@ -64,6 +64,7 @@ class SupportThreadController:
   def colorThreadOperation(self):
     print("Color thread started")
     self.colorSocket.bind("tcp://*:%s" % "2555")
+    self.lightControllerShare.changeColor(180, 180, 180)
     while self.colorThreadToggle:
       command = self.colorSocket.recv_string()
       print("Color thread received: " + command)
